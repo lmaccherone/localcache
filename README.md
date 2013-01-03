@@ -1,26 +1,15 @@
-[![build status](https://secure.travis-ci.org/lmaccherone/node-localstorage.png)](http://travis-ci.org/lmaccherone/node-localstorage)
-# node-localstorage #
+[![build status](https://secure.travis-ci.org/lmaccherone/localcache.png)](http://travis-ci.org/lmaccherone/localcache)
+# localcache #
 
-Copyright (c) 2012, Lawrence S. Maccherone, Jr.
+Copyright (c) 2013, Lawrence S. Maccherone, Jr.
 
-_A drop-in substitute for the browser native localStorage API that runs on node.js._
+_Uses localStorage (or node-localstorage) to implement a Least Recently Updated cache_
 
-### Working ###
-
-* All methods in the [localStorage spec](http://www.w3.org/TR/webstorage/#storage) 
-  interface including:
-  * length
-  * setItem(key, value)
-  * getItem(key)
-  * removeItem(key)
-  * key(n)
-  * clear()  
-* Serializes to disk in the location specified during instantiation
-
-### Unsupported ###
-
-* Events
-* Associative array syntax `localStorage['myKey'] = 'myValue'`
+## Features ##
+* Uses localStorage when running in the browser
+* Uses node-localstorage when running in node.js
+* Allows you to set the quota when running in node.js
+* Implements Least Recently Updated algorithm which is ideal for incremental chart updates among other use cases
 
 ## Credits ##
 
@@ -30,37 +19,36 @@ Author: [Larry Maccherone](http://maccherone.com)
 
 ### CoffeeScript ###
 
-    unless localStorage?
-      {LocalStorage} = require('../')  # require('node-localstorage') for you
-      localStorage = new LocalStorage('./scratch')
+    {LocalCache} = require('../')
+    localCache = new LocalCache()
 
-    localStorage.setItem('myFirstKey', 'myFirstValue')
-    console.log(localStorage.getItem('myFirstKey'))
-    # myFirstValue
+    localCache.setItem('myFirstKey', {key: "value", anotherkey: "another value"})
+    console.log(localCache.getItem('myFirstKey').key)
+    # value
     
-    localStorage._deleteLocation()  # cleans up ./scratch created during doctest
+    LocalCache.localStorage._deleteLocation()  # cleans up scratch directory created during doctest
 
 ### JavaScript ###
 
-```JavaScript    
-if (typeof localStorage === "undefined" || localStorage === null) {
-  var LocalStorage = require('node-localstorage').LocalStorage;
-  localStorage = new LocalStorage('./scratch');
-}
+```JavaScript   
+var LocalCache = require('../').LocalCache;
+var localCache = new LocalCache();
 
-localStorage.setItem('myFirstKey', 'myFirstValue');
-console.log(localStorage.getItem('myFirstKey'));
+localCache.setItem('myFirstKey', {key: "value", anotherkey: "another value"});
+
+console.log(localCache.getItem('myFirstKey').key);
+// value
+
+LocalCache.localStorage._deleteLocation();
 ```
 
 ## Installation ##
 
-`npm install node-localstorage`
+`npm install localcache --save`
 
 ## Changelog ##
 
-* 0.1.0 - 2012-10-29 - Original version
-* 0.1.1 - 2012-10-29 - Update to support Travis CI
-* 0.1.2 - 2012-11-02 - Finally got Travis CI working
+* 0.1.0 - 2013-01-03 - Original version
 
 ## MIT License ##
 

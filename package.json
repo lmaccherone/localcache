@@ -2,7 +2,7 @@
   "name": "localcache",
   "version": "0.1.2",
   "main": "./LocalCache",
-  "description": "Uses LocalStorage to implement a Least Recently Updated cache.",
+  "description": "Uses localStorage (or node-localstorage) to implement a Least Recently Updated cache",
   "keywords": [
     "localStorage",
     "Web Storage",
