@@ -7,9 +7,15 @@ _Uses localStorage (or node-localstorage) to implement a Least Recently Updated 
 
 ## Features ##
 * Uses localStorage when running in the browser
+* If called from browsers that don't support localStorage, it will just not save anything in the cache so your client
+  code should work exactly the same in older browsers. You have to account for the situation that your keys might
+  disappear from the cache anyway because it will delete old records when it needs the space, so there is never any
+  guarantee that the stuff you put in it will be there.
 * Uses node-localstorage when running in node.js
 * Allows you to set the quota when running in node.js
 * Implements Least Recently Updated algorithm which is ideal for incremental chart updates among other use cases
+* Allows for the injection of a different package than node-localstorage in case you wanted to implement an in-memory
+  Flash, or other localStorage substitute
 
 ## Credits ##
 
@@ -48,6 +54,7 @@ LocalCache.localStorage._deleteLocation();
 
 ## Changelog ##
 
+* 0.2.0 - 2012-01-13 - Added code and tests to confirm that it will just not cache anything when there is no 'localStorage' like old browsers
 * 0.1.0 - 2013-01-03 - Original version
 
 ## MIT License ##
